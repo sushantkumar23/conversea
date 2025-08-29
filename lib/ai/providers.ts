@@ -5,6 +5,7 @@ import {
 } from 'ai';
 import { xai } from '@ai-sdk/xai';
 import { openai } from '@ai-sdk/openai';
+import { anthropic } from '@ai-sdk/anthropic';
 import {
   artifactModel,
   chatModel,
@@ -17,6 +18,7 @@ export const myProvider = isTestEnvironment
   ? customProvider({
       languageModels: {
         'chat-model': chatModel,
+        'chat-model-claude': chatModel,
         'chat-model-reasoning': reasoningModel,
         'title-model': titleModel,
         'artifact-model': artifactModel,
@@ -24,7 +26,8 @@ export const myProvider = isTestEnvironment
     })
   : customProvider({
       languageModels: {
-        'chat-model': openai('gpt-5-nano'),
+        'chat-model': openai('gpt-5'),
+        'chat-model-claude': anthropic('claude-3-7-sonnet-latest'),
         'chat-model-reasoning': wrapLanguageModel({
           model: xai('grok-3-mini-beta'),
           middleware: extractReasoningMiddleware({ tagName: 'think' }),
